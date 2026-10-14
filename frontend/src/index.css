@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  body {
+    @apply bg-paper text-ink antialiased;
+  }
+  h1, h2, h3, .font-display {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid #1b5ff0;
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .row-hover {
+    @apply transition-colors duration-150 hover:bg-ink/[0.03] active:bg-ink/[0.05];
+  }
+  .card-surface {
+    @apply bg-white border border-line rounded-xl;
+  }
+  .pressable {
+    @apply transition-all duration-150 ease-out hover:-translate-y-px active:translate-y-0 active:scale-[0.98];
+  }
+}

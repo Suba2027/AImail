@@ -1,0 +1,73 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  application:
+    name: reachai-backend
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:reachai}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+
+  data:
+    redis:
+      host: ${REDIS_HOST:127.0.0.1}
+      port: ${REDIS_PORT:6379}
+
+  mail:
+    host: ${SMTP_HOST:smtp.ethereal.email}
+    port: ${SMTP_PORT:587}
+    username: ${SMTP_USERNAME}
+    password: ${SMTP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: 86400000
+
+  oauth2:
+    authorized-redirect-uri: ${FRONTEND_URL:http://localhost:3000}/oauth2/redirect
+
+  frontend:
+    url: ${FRONTEND_URL:http://localhost:3000}
+
+  email:
+    worker-concurrency: ${WORKER_CONCURRENCY:5}
+    min-delay-seconds: ${MIN_DELAY_SECONDS:1}
+    max-retry-attempts: 3
+
+  ai:
+    enabled: ${AI_ENABLED:false}
+    provider-api-key: ${AI_PROVIDER_API_KEY:}
+    model: ${AI_MODEL:gpt-4o-mini}
+    api-url: ${AI_API_URL:https://api.openai.com/v1/chat/completions}
